@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chúc mừng 20/10 – Thiệp dành cho Sếp Vân</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#fff7fb; --bg2:#fff0f6;
+      --accent:#ff6fb5; --muted:#6b6b6b;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      margin:0; background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      color:#2b2b2b;
+    }
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+    .card{
+      width:100%;max-width:980px;background:rgba(255,255,255,0.92);
+      border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      overflow:hidden;display:grid;grid-template-columns:1fr 420px;
+    }
+    @media(max-width:900px){.card{grid-template-columns:1fr;}.right{order:2}}
+    .left{padding:36px 40px}
+    .hero-title{font-size:34px;margin:0 0 8px;color:#111;font-weight:800}
+    .subtitle{color:var(--muted);margin:0 0 18px}
+    .message{
+      background:#fff;
+      padding:18px;border-radius:12px;border:1px dashed rgba(0,0,0,0.06);margin-bottom:16px
+    }
+    .message p{margin:0;font-size:18px;line-height:1.6}
+
+    /* Card nhún khi cập nhật */
+    .message.pop { animation: bump .42s ease; }
+    @keyframes bump { 0%{transform:scale(.98)} 60%{transform:scale(1.02)} 100%{transform:scale(1)} }
+
+    /* Chữ ký sinh động */
+    .sign{
+      display:inline-block;
+      font-family:"Dancing Script",cursive;
+      font-weight:700; font-size:22px; letter-spacing:.3px;
+      background:linear-gradient(90deg,#ff4099,#ff9ad1,#ff5ea8);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      position:relative; padding-bottom:4px;
+    }
+    .sign.anim::after{
+      content:""; position:absolute; left:0; right:0; bottom:0; height:3px; border-radius:3px;
+      background:linear-gradient(90deg,#ff6fb5,#ff8acb);
+      transform:scaleX(0); transform-origin:left;
+      animation:underline .6s ease forwards .15s;
+    }
+    @keyframes underline{to{transform:scaleX(1)}}
+    .heart-pop{ margin-left:6px; display:inline-block; font-size:18px; animation:floatUp 1.1s ease-out forwards; }
+    @keyframes floatUp{ 0%{opacity:0;transform:translateY(6px) scale(.8)} 40%{opacity:1} 100%{opacity:0;transform:translateY(-14px) scale(1.2)} }
+
+    .from-input{display:flex;gap:8px;margin-top:10px}
+    input[type=text]{flex:1;padding:10px 12px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);font-size:14px;background:#f8f8f8}
+    button{
+      background:linear-gradient(90deg,var(--accent),#ff8acb);
+      border:none;color:white;padding:10px 14px;border-radius:12px;
+      font-weight:700;cursor:pointer;transition:.15s; box-shadow:0 6px 16px rgba(255,111,181,.35);
+    }
+    button:hover{opacity:.92}
+    label[for=msgInput]{display:block;margin-top:6px;font-weight:700;font-size:13px}
+    textarea{width:100%;padding:12px;border-radius:12px;border:2px solid #222; background:#fff;font-size:14px}
+
+    .right{
+      background:linear-gradient(180deg,rgba(255,255,255,0.3),rgba(255,255,255,0.15));
+      padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px
+    }
+    .profile{
+      width:200px;height:200px;border-radius:20px;overflow:hidden;
+      box-shadow:0 10px 25px rgba(255,111,181,0.35);
+      border:5px solid var(--accent);transition:.3s;
+    }
+    .profile:hover{transform:scale(1.03)}
+    .profile img{width:100%;height:100%;object-fit:cover;display:block}
+    .big-msg{font-size:20px;font-weight:800;text-align:center;margin:6px 0}
+    .small{color:var(--muted);font-size:13px;text-align:center}
+    footer{padding:14px;text-align:center;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="left">
+        <h1 class="hero-title">Chúc mừng 20/10 — Ngày Phụ Nữ Việt Nam</h1>
+        <p class="subtitle">Gửi lời yêu thương đến chị Vân xinh đẹp – người sếp tuyệt vời của em 🌸</p>
+
+        <div class="message" id="messagePreview">
+          <p id="msgText">Chị ơi, chúc chị 20/10 thật nhiều sức khỏe, luôn xinh tươi và hạnh phúc!</p>
+        </div>
+
+        <label for="msgInput">Tùy chỉnh lời chúc</label>
+        <textarea id="msgInput" rows="4">Chị ơi, chúc chị 20/10 thật nhiều sức khỏe, luôn xinh tươi và hạnh phúc!</textarea>
+
+        <div class="from-input">
+          <input id="fromName" type="text" placeholder="Ký tên (vd: Thúy Vân)">
+          <button id="applyBtn">Áp dụng</button>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="profile">
+          <img id="photo"
+               src="https://uploads.onecompiler.io/4426vs9dq/4426ux5nh/sepVan.png"
+               alt="sếp Vân xinh đẹp">
+        </div>
+        <div class="big-msg">Gửi tặng chị sếp Vân xinh đẹp nhất hệ mặt trời 💖</div>
+        <div class="small">20/10 – Chúc chị luôn rạng rỡ, an yên và thành công 🌷</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Thiệp chúc 20/10 – Code by Em 💐</footer>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    const msgInput = document.getElementById('msgInput');
+    const applyBtn = document.getElementById('applyBtn');
+    const msgText  = document.getElementById('msgText');
+    const fromName = document.getElementById('fromName');
+
+    function animateSignature(){
+      const box = document.getElementById('messagePreview');
+      box.classList.remove('pop'); void box.offsetWidth; box.classList.add('pop');
+      const s = document.querySelector('.sign');
+      if (s){ s.classList.remove('anim'); void s.offsetWidth; s.classList.add('anim'); }
+      if (s){
+        const heart = document.createElement('span');
+        heart.className = 'heart-pop';
+        heart.textContent = '💖';
+        s.appendChild(heart);
+        setTimeout(()=> heart.remove(), 1100);
+      }
+    }
+
+    applyBtn.addEventListener('click', ()=>{
+      const text   = msgInput.value.trim() || 'Chúc mừng 20/10!';
+      const signer = fromName.value.trim();
+      msgText.innerHTML = text + (signer ? `<br><br><span class="sign anim">— ${signer}</span>` : '');
+      animateSignature();
+      confetti({ particleCount: 80, spread: 90, origin: { y: 0.4 } });
+    });
+
+    // Pháo giấy nhẹ lúc mở trang
+    setTimeout(()=>{ confetti({particleCount:120, spread:120, origin:{y:0.4}}) },600);
+  </script>
+</body>
+</html>
